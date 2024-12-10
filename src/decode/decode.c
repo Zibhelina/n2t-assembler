@@ -46,15 +46,10 @@ void decode_dest_field(char* dest_buffer, size_t dest_buffer_size, char* decoded
 void decode_comp_field(char* comp_buffer, size_t comp_buffer_size, char* decoded_instruction_buffer, size_t comp_offset) {
     if(comp_buffer_size == 1) {
             if(comp_buffer[0] == '0') {
-                decoded_instruction_buffer[comp_offset + 0] = '0';
                 decoded_instruction_buffer[comp_offset + 1] = '1';
-                decoded_instruction_buffer[comp_offset + 2] = '0';
                 decoded_instruction_buffer[comp_offset + 3] = '1';
-                decoded_instruction_buffer[comp_offset + 4] = '0';
                 decoded_instruction_buffer[comp_offset + 5] = '1';
-                decoded_instruction_buffer[comp_offset + 6] = '0';
             } else if(comp_buffer[0] == '1') {
-                decoded_instruction_buffer[comp_offset + 0] = '0';
                 decoded_instruction_buffer[comp_offset + 1] = '1';
                 decoded_instruction_buffer[comp_offset + 2] = '1';
                 decoded_instruction_buffer[comp_offset + 3] = '1';
@@ -62,60 +57,33 @@ void decode_comp_field(char* comp_buffer, size_t comp_buffer_size, char* decoded
                 decoded_instruction_buffer[comp_offset + 5] = '1';
                 decoded_instruction_buffer[comp_offset + 6] = '1';
             } else if(comp_buffer[0] == 'A') {
-                decoded_instruction_buffer[comp_offset + 0] = '0';
                 decoded_instruction_buffer[comp_offset + 1] = '1';
                 decoded_instruction_buffer[comp_offset + 2] = '1';
-                decoded_instruction_buffer[comp_offset + 3] = '0';
-                decoded_instruction_buffer[comp_offset + 4] = '0';
-                decoded_instruction_buffer[comp_offset + 5] = '0';
-                decoded_instruction_buffer[comp_offset + 6] = '0';
             } else if(comp_buffer[0] == 'M') {
                 decoded_instruction_buffer[comp_offset + 0] = '1';
                 decoded_instruction_buffer[comp_offset + 1] = '1';
                 decoded_instruction_buffer[comp_offset + 2] = '1';
-                decoded_instruction_buffer[comp_offset + 3] = '0';
-                decoded_instruction_buffer[comp_offset + 4] = '0';
-                decoded_instruction_buffer[comp_offset + 5] = '0';
-                decoded_instruction_buffer[comp_offset + 6] = '0';
             } else if(comp_buffer[0] == 'D') {
-                decoded_instruction_buffer[comp_offset + 0] = '0';
-                decoded_instruction_buffer[comp_offset + 1] = '0';
-                decoded_instruction_buffer[comp_offset + 2] = '0';
                 decoded_instruction_buffer[comp_offset + 3] = '1';
                 decoded_instruction_buffer[comp_offset + 4] = '1';
-                decoded_instruction_buffer[comp_offset + 5] = '0';
-                decoded_instruction_buffer[comp_offset + 6] = '0';
             }
         } else if (comp_buffer_size == 2) {
             if(comp_buffer[0] == '-') {
                 if(comp_buffer[1] == '1') {
-                    decoded_instruction_buffer[comp_offset + 0] = '0';
                     decoded_instruction_buffer[comp_offset + 1] = '1';
                     decoded_instruction_buffer[comp_offset + 2] = '1';
                     decoded_instruction_buffer[comp_offset + 3] = '1';
-                    decoded_instruction_buffer[comp_offset + 4] = '0';
                     decoded_instruction_buffer[comp_offset + 5] = '1';
-                    decoded_instruction_buffer[comp_offset + 6] = '0';
                 } else if(comp_buffer[1] == 'A') {
-                    decoded_instruction_buffer[comp_offset + 0] = '0';
                     decoded_instruction_buffer[comp_offset + 1] = '1';
                     decoded_instruction_buffer[comp_offset + 2] = '1';
-                    decoded_instruction_buffer[comp_offset + 3] = '0';
-                    decoded_instruction_buffer[comp_offset + 4] = '0';
-                    decoded_instruction_buffer[comp_offset + 5] = '0';
                     decoded_instruction_buffer[comp_offset + 6] = '1';
                 } else if(comp_buffer[1] == 'M') {
                     decoded_instruction_buffer[comp_offset + 0] = '1';
                     decoded_instruction_buffer[comp_offset + 1] = '1';
                     decoded_instruction_buffer[comp_offset + 2] = '1';
-                    decoded_instruction_buffer[comp_offset + 3] = '0';
-                    decoded_instruction_buffer[comp_offset + 4] = '0';
-                    decoded_instruction_buffer[comp_offset + 5] = '0';
                     decoded_instruction_buffer[comp_offset + 6] = '1';
                 } else if(comp_buffer[1] == 'D') {
-                    decoded_instruction_buffer[comp_offset + 0] = '0';
-                    decoded_instruction_buffer[comp_offset + 1] = '0';
-                    decoded_instruction_buffer[comp_offset + 2] = '0';
                     decoded_instruction_buffer[comp_offset + 3] = '1';
                     decoded_instruction_buffer[comp_offset + 4] = '1';
                     decoded_instruction_buffer[comp_offset + 5] = '1';
@@ -123,55 +91,34 @@ void decode_comp_field(char* comp_buffer, size_t comp_buffer_size, char* decoded
                 }
             } else if(comp_buffer[0] == '!') {
                 if(comp_buffer[1] == 'A') {
-                    decoded_instruction_buffer[comp_offset + 0] = '0';
                     decoded_instruction_buffer[comp_offset + 1] = '1';
                     decoded_instruction_buffer[comp_offset + 2] = '1';
-                    decoded_instruction_buffer[comp_offset + 3] = '0';
-                    decoded_instruction_buffer[comp_offset + 4] = '0';
-                    decoded_instruction_buffer[comp_offset + 5] = '0';
                     decoded_instruction_buffer[comp_offset + 6] = '1';
                 } else if(comp_buffer[1] == 'M') {
                     decoded_instruction_buffer[comp_offset + 0] = '1';
                     decoded_instruction_buffer[comp_offset + 1] = '1';
                     decoded_instruction_buffer[comp_offset + 2] = '1';
-                    decoded_instruction_buffer[comp_offset + 3] = '0';
-                    decoded_instruction_buffer[comp_offset + 4] = '0';
-                    decoded_instruction_buffer[comp_offset + 5] = '0';
                     decoded_instruction_buffer[comp_offset + 6] = '1';
                 } else if(comp_buffer[1] == 'D') {
-                    decoded_instruction_buffer[comp_offset + 0] = '0';
-                    decoded_instruction_buffer[comp_offset + 1] = '0';
-                    decoded_instruction_buffer[comp_offset + 2] = '0';
                     decoded_instruction_buffer[comp_offset + 3] = '1';
                     decoded_instruction_buffer[comp_offset + 4] = '1';
-                    decoded_instruction_buffer[comp_offset + 5] = '0';
                     decoded_instruction_buffer[comp_offset + 6] = '1';
                 }
             }
         } else if (comp_buffer_size == 3) {
             if(comp_buffer[0] == 'A') {
                 if(comp_buffer[1] == '+') {
-                    decoded_instruction_buffer[comp_offset + 0] = '0';
                     decoded_instruction_buffer[comp_offset + 1] = '1';
                     decoded_instruction_buffer[comp_offset + 2] = '1';
-                    decoded_instruction_buffer[comp_offset + 3] = '0';
                     decoded_instruction_buffer[comp_offset + 4] = '1';
                     decoded_instruction_buffer[comp_offset + 5] = '1';
                     decoded_instruction_buffer[comp_offset + 6] = '1';
                 } else if(comp_buffer[1] == '-') {
                     if(comp_buffer[2] == '1') {
-                        decoded_instruction_buffer[comp_offset + 0] = '0';
                         decoded_instruction_buffer[comp_offset + 1] = '1';
                         decoded_instruction_buffer[comp_offset + 2] = '1';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
-                        decoded_instruction_buffer[comp_offset + 4] = '0';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
-                        decoded_instruction_buffer[comp_offset + 6] = '0';
                     } else if(comp_buffer[2] == 'D') {
-                        decoded_instruction_buffer[comp_offset + 0] = '0';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
-                        decoded_instruction_buffer[comp_offset + 2] = '0';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
                         decoded_instruction_buffer[comp_offset + 4] = '1';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
                         decoded_instruction_buffer[comp_offset + 6] = '1';
@@ -182,7 +129,6 @@ void decode_comp_field(char* comp_buffer, size_t comp_buffer_size, char* decoded
                     decoded_instruction_buffer[comp_offset + 0] = '1';
                     decoded_instruction_buffer[comp_offset + 1] = '1';
                     decoded_instruction_buffer[comp_offset + 2] = '1';
-                    decoded_instruction_buffer[comp_offset + 3] = '0';
                     decoded_instruction_buffer[comp_offset + 4] = '1';
                     decoded_instruction_buffer[comp_offset + 5] = '1';
                     decoded_instruction_buffer[comp_offset + 6] = '1';
@@ -191,15 +137,9 @@ void decode_comp_field(char* comp_buffer, size_t comp_buffer_size, char* decoded
                         decoded_instruction_buffer[comp_offset + 0] = '1';
                         decoded_instruction_buffer[comp_offset + 1] = '1';
                         decoded_instruction_buffer[comp_offset + 2] = '1';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
-                        decoded_instruction_buffer[comp_offset + 4] = '0';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
-                        decoded_instruction_buffer[comp_offset + 6] = '0';
                     } else if(comp_buffer[2] == 'D') {
                         decoded_instruction_buffer[comp_offset + 0] = '1';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
-                        decoded_instruction_buffer[comp_offset + 2] = '0';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
                         decoded_instruction_buffer[comp_offset + 4] = '1';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
                         decoded_instruction_buffer[comp_offset + 6] = '1';
@@ -208,90 +148,45 @@ void decode_comp_field(char* comp_buffer, size_t comp_buffer_size, char* decoded
             } else if(comp_buffer[0] == 'D') {
                 if(comp_buffer[1] == '+') {
                     if(comp_buffer[2] == '1') {
-                        decoded_instruction_buffer[comp_offset + 0] = '0';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
                         decoded_instruction_buffer[comp_offset + 2] = '1';
                         decoded_instruction_buffer[comp_offset + 3] = '1';
                         decoded_instruction_buffer[comp_offset + 4] = '1';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
                         decoded_instruction_buffer[comp_offset + 6] = '1';
                     } else if(comp_buffer[2] == 'A') {
-                        decoded_instruction_buffer[comp_offset + 0] = '0';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
-                        decoded_instruction_buffer[comp_offset + 2] = '0';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
-                        decoded_instruction_buffer[comp_offset + 4] = '0';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
-                        decoded_instruction_buffer[comp_offset + 6] = '0';
                     } else if(comp_buffer[2] == 'M') {
                         decoded_instruction_buffer[comp_offset + 0] = '1';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
-                        decoded_instruction_buffer[comp_offset + 2] = '0';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
-                        decoded_instruction_buffer[comp_offset + 4] = '0';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
-                        decoded_instruction_buffer[comp_offset + 6] = '0';
                     }
                 } else if(comp_buffer[1] == '-') {
                     if(comp_buffer[2] == '1') {
-                        decoded_instruction_buffer[comp_offset + 0] = '0';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
-                        decoded_instruction_buffer[comp_offset + 2] = '0';
                         decoded_instruction_buffer[comp_offset + 3] = '1';
                         decoded_instruction_buffer[comp_offset + 4] = '1';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
-                        decoded_instruction_buffer[comp_offset + 6] = '0';
                     } else if(comp_buffer[2] == 'A') {
-                        decoded_instruction_buffer[comp_offset + 0] = '0';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
                         decoded_instruction_buffer[comp_offset + 2] = '1';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
-                        decoded_instruction_buffer[comp_offset + 4] = '0';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
                         decoded_instruction_buffer[comp_offset + 6] = '1';
                     } else if(comp_buffer[2] == 'M') {
                         decoded_instruction_buffer[comp_offset + 0] = '1';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
                         decoded_instruction_buffer[comp_offset + 2] = '1';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
-                        decoded_instruction_buffer[comp_offset + 4] = '0';
                         decoded_instruction_buffer[comp_offset + 5] = '1';
                         decoded_instruction_buffer[comp_offset + 6] = '1';
                     }
                 } else if(comp_buffer[1] == '&') {
-                    if(comp_buffer[2] == 'A') {
-                        decoded_instruction_buffer[comp_offset + 0] = '0';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
-                        decoded_instruction_buffer[comp_offset + 2] = '0';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
-                        decoded_instruction_buffer[comp_offset + 4] = '0';
-                        decoded_instruction_buffer[comp_offset + 5] = '0';
-                        decoded_instruction_buffer[comp_offset + 6] = '0';
-                    } else if(comp_buffer[2] == 'M') {
+                    if(comp_buffer[2] == 'M') {
                         decoded_instruction_buffer[comp_offset + 0] = '1';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
-                        decoded_instruction_buffer[comp_offset + 2] = '0';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
-                        decoded_instruction_buffer[comp_offset + 4] = '0';
-                        decoded_instruction_buffer[comp_offset + 5] = '0';
-                        decoded_instruction_buffer[comp_offset + 6] = '0';
                     }
                 } else if(comp_buffer[1] == '|') {
                     if(comp_buffer[2] == 'A') {
-                        decoded_instruction_buffer[comp_offset + 0] = '0';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
                         decoded_instruction_buffer[comp_offset + 2] = '1';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
                         decoded_instruction_buffer[comp_offset + 4] = '1';
-                        decoded_instruction_buffer[comp_offset + 5] = '0';
                         decoded_instruction_buffer[comp_offset + 6] = '1';
                     } else if(comp_buffer[2] == 'M') {
                         decoded_instruction_buffer[comp_offset + 0] = '1';
-                        decoded_instruction_buffer[comp_offset + 1] = '0';
                         decoded_instruction_buffer[comp_offset + 2] = '1';
-                        decoded_instruction_buffer[comp_offset + 3] = '0';
                         decoded_instruction_buffer[comp_offset + 4] = '1';
-                        decoded_instruction_buffer[comp_offset + 5] = '0';
                         decoded_instruction_buffer[comp_offset + 6] = '1';
                     }
                 }
@@ -301,30 +196,20 @@ void decode_comp_field(char* comp_buffer, size_t comp_buffer_size, char* decoded
 
 void decode_jump_field(char* jump_buffer, char* decoded_intruction_buffer, size_t jump_offset) {
     if(jump_buffer[1] == 'G' && jump_buffer[2] == 'T') {
-        decoded_intruction_buffer[jump_offset + 0] = '0';
-        decoded_intruction_buffer[jump_offset + 1] = '0';
         decoded_intruction_buffer[jump_offset + 2] = '1';
-        printf("%s", decoded_intruction_buffer);
     } else if (jump_buffer[1] == 'E' && jump_buffer[2] == 'Q') {
-        decoded_intruction_buffer[jump_offset + 0] = '0';
         decoded_intruction_buffer[jump_offset + 1] = '1';
-        decoded_intruction_buffer[jump_offset + 2] = '0';
     } else if (jump_buffer[1] == 'G' && jump_buffer[2] == 'E') {
-        decoded_intruction_buffer[jump_offset + 0] = '0';
         decoded_intruction_buffer[jump_offset + 1] = '1';
         decoded_intruction_buffer[jump_offset + 2] = '1';
     } else if (jump_buffer[1] == 'L' && jump_buffer[2] == 'T') {
         decoded_intruction_buffer[jump_offset + 0] = '1';
-        decoded_intruction_buffer[jump_offset + 1] = '0';
-        decoded_intruction_buffer[jump_offset + 2] = '0';
     } else if (jump_buffer[1] == 'N' && jump_buffer[2] == 'E') {
         decoded_intruction_buffer[jump_offset + 0] = '1';
-        decoded_intruction_buffer[jump_offset + 1] = '0';
         decoded_intruction_buffer[jump_offset + 2] = '1';
     } else if (jump_buffer[1] == 'L' && jump_buffer[2] == 'E') {
         decoded_intruction_buffer[jump_offset + 0] = '1';
         decoded_intruction_buffer[jump_offset + 1] = '1';
-        decoded_intruction_buffer[jump_offset + 2] = '0';
     } else if (jump_buffer[1] == 'M' && jump_buffer[2] == 'P') {
         decoded_intruction_buffer[jump_offset + 0] = '1';
         decoded_intruction_buffer[jump_offset + 1] = '1';
@@ -332,12 +217,6 @@ void decode_jump_field(char* jump_buffer, char* decoded_intruction_buffer, size_
     }
 }
 
-void print_array(char* array, int array_size) {
-    for(int i = 0; i < array_size; i++) {
-        printf("%c", array[i]);
-    }
-    printf("\n");
-}
 void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool instruction_type, char* decoded_intruction_buffer) {
     if(instruction_type == false) {
         // instruction type A
@@ -349,15 +228,9 @@ void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool inst
         decimal_to_binary(decimal_buffer, decimal_buffer_size, binary_buffer, binary_buffer_size);
     } else {
         // instruction type B
-        //strcpy(decoded_intruction_buffer, "111");
-        printf("\n++++++++++++++++++++++++++++++++\n");
-        printf("beginning of instruction decoding:\n");
-        printf("instruction: %s\n", instruction_buffer);
-        print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
         decoded_intruction_buffer[0] = '1';
         decoded_intruction_buffer[1] = '1';
         decoded_intruction_buffer[2] = '1';
-        print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
         
         // find which fields are contained in the instruction
         bool field_tracker[2] = {false, false};
@@ -406,7 +279,6 @@ void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool inst
                     comp_buffer[comp_index] = instruction_buffer[i];
                     comp_index++;
                 }
-                //printf("\nafter increment comp index: %zu\n", comp_index);
             } else {
                 if(jump_index < max_field_size) {
                     jump_buffer[jump_index] = instruction_buffer[i];
@@ -429,67 +301,14 @@ void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool inst
         if(field_tracker[0] == true) {
             size_t dest_offset = 10;
             decode_dest_field(dest_buffer, dest_buffer_size, decoded_intruction_buffer, dest_offset);
-            
-            printf("-----------------------------------\n");
-            printf("decoded buffer after dest_filling\n");
-            print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
-            printf("-----------------------------------\n");
         }
         if(field_tracker[1] == true) {
             size_t jump_offset = 13;
             decode_jump_field(jump_buffer, decoded_intruction_buffer, jump_offset); 
-            print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);  
-            
-            printf("-----------------------------------\n");
-            printf("decoded buffer after jump_filling\n");
-            print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
-            printf("-----------------------------------\n");
         }
         
         size_t comp_offset = 3;
         decode_comp_field(comp_buffer, comp_buffer_size, decoded_intruction_buffer, comp_offset);
-        
-        printf("-----------------------------------\n");
-        printf("decoded buffer after comp_filling\n");
-        print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
-        printf("-----------------------------------\n");
-        printf("\n++++++++++++++++++++++++++++++++\n");
-
-        /*
-        if(field_tracker[0] == false) {
-            // B1 or B2
-            if(field_tracker[1] == false) {
-                // B1
-                printf("\ncomp index: %zu\n", comp_index);
-                printf("\ncomp buffer: %s\n", comp_buffer);
-            } else {
-                // B2
-                
-                printf("\ncomp index: %zu\n", comp_index);
-                printf("\njump index: %zu\n", jump_index);
-                printf("\ncomp buffer: %s\n", comp_buffer);
-                printf("\njump buffer: %s\n", jump_buffer);
-            }
-        } else {
-            if(field_tracker[1] == false) {
-                // B3
-
-                printf("\ndest index: %zu\n", dest_index);
-                printf("\ncomp index: %zu\n", comp_index);
-                printf("\ndest buffer: %s\n", dest_buffer);
-                printf("\ncomp buffer: %s\n", comp_buffer);
-            } else {
-                // B4
-
-                printf("\ndest index: %zu\n", dest_index);
-                printf("\ncomp index: %zu\n", comp_index);
-                printf("\njump index: %zu\n", jump_index);
-                printf("\ndest buffer: %s\n", dest_buffer);
-                printf("\ncomp buffer: %s\n", comp_buffer);
-                printf("\njump buffer: %s\n", jump_buffer);
-            }
-        }
-        */
 
         free(dest_buffer);
         free(comp_buffer);
