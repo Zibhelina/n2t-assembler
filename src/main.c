@@ -30,7 +30,7 @@ int main() {
         return 1;
     }
 
-    char ch;
+    int ch;
     bool is_end_of_file = false;
     while ((ch = fgetc(assembly_code)) != EOF) {
         Linked_List linked_list = create_linked_list();
@@ -45,17 +45,18 @@ int main() {
                 break;
             }
 
-            linked_list.add_to_end(&linked_list.head, &linked_list.tail, &linked_list.length, ch);
+            linked_list.add_to_end(&linked_list.head, &linked_list.tail, &linked_list.length, (char)ch);
             ch = fgetc(assembly_code);
         }
 
         // linked list -> array
         size_t instruction_buffer_size = linked_list.length;
-        char* instruction_buffer = malloc(sizeof(char) * instruction_buffer_size);
+        char* instruction_buffer = (char*) calloc(instruction_buffer_size + 1, sizeof(char));
         linked_list.fill_buffer(linked_list.head, instruction_buffer);
+        instruction_buffer[instruction_buffer_size] = '\0';
         
         // validate
-        bool* validation_result = malloc(sizeof(bool) * 2);
+        bool* validation_result = (bool*) calloc(2, sizeof(bool));
         validate(instruction_buffer, instruction_buffer_size, validation_result);
         bool is_instruction_valid = validation_result[0];
         bool instruction_type = validation_result[1];
@@ -63,9 +64,8 @@ int main() {
         if(is_instruction_valid == true) {
             // decode
 
-            //printf("\ntype of instruction: %s\n", instruction_type == false ? "instruction A" : "instruction B");
-            char* decoded_instruction_buffer = malloc(sizeof(char) * DECODED_INSTRUCTION_BUFFER_SIZE);
-            strcpy(decoded_instruction_buffer, "0000000000000000");
+            char* decoded_instruction_buffer = (char*) malloc((DECODED_INSTRUCTION_BUFFER_SIZE+1) * sizeof(char));
+            strcpy(decoded_instruction_buffer, "0000000000000000\0");
             decoding(instruction_buffer, instruction_buffer_size, instruction_type, decoded_instruction_buffer);
             
             fprintf(machine_code, "%s", decoded_instruction_buffer);

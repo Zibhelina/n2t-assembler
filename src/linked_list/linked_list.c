@@ -3,20 +3,18 @@
 #include "linked_list.h"
 
 static void linked_list__add_to_end(Node** head, Node** tail, size_t* length, char value) {
-    Node* new_node = malloc(sizeof(Node));
+    Node* new_node = (Node*) malloc(sizeof(Node));
     new_node->value = value;
     new_node->next = NULL;
     if(*head == NULL || *tail == NULL) {
         *head = new_node;
         *tail = new_node;
         (*length)++;
-        //printf("\nNew node added to linked list.\n");
         return;
     }
     (*tail)->next = new_node;
     (*tail) = new_node;
     (*length)++;
-    //printf("\nNew node added to linked list.\n");
 }
 
 static void linked_list__destroy(Node** head, Node** tail, size_t* length) {
@@ -29,7 +27,6 @@ static void linked_list__destroy(Node** head, Node** tail, size_t* length) {
     *head = NULL;
     *tail = NULL;
     *length = 0;
-    //printf("\nLinked List destroyed.\n");
 }
 
 static void linked_list__fill_buffer(Node* head, char* buffer) {
@@ -49,7 +46,6 @@ static void linked_list__print(Node* head) {
         printf("%c -> ", head->value);
         head = head->next;
     }
-    //printf("\nLinked List printed.\n");
 }
 
 Linked_List create_linked_list(void) {
@@ -62,6 +58,5 @@ Linked_List create_linked_list(void) {
         .fill_buffer = linked_list__fill_buffer,
         .print = linked_list__print
     };
-    //printf("\nLinked List created.\n");
     return linked_list;
 }

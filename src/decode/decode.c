@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "decode.h"
 
@@ -300,37 +301,43 @@ void decode_comp_field(char* comp_buffer, size_t comp_buffer_size, char* decoded
 
 void decode_jump_field(char* jump_buffer, char* decoded_intruction_buffer, size_t jump_offset) {
     if(jump_buffer[1] == 'G' && jump_buffer[2] == 'T') {
-        decoded_intruction_buffer[jump_offset + 0] = 0;
-        decoded_intruction_buffer[jump_offset + 1] = 0;
-        decoded_intruction_buffer[jump_offset + 2] = 1;
+        decoded_intruction_buffer[jump_offset + 0] = '0';
+        decoded_intruction_buffer[jump_offset + 1] = '0';
+        decoded_intruction_buffer[jump_offset + 2] = '1';
         printf("%s", decoded_intruction_buffer);
     } else if (jump_buffer[1] == 'E' && jump_buffer[2] == 'Q') {
-        decoded_intruction_buffer[jump_offset + 0] = 0;
-        decoded_intruction_buffer[jump_offset + 1] = 1;
-        decoded_intruction_buffer[jump_offset + 2] = 0;
+        decoded_intruction_buffer[jump_offset + 0] = '0';
+        decoded_intruction_buffer[jump_offset + 1] = '1';
+        decoded_intruction_buffer[jump_offset + 2] = '0';
     } else if (jump_buffer[1] == 'G' && jump_buffer[2] == 'E') {
-        decoded_intruction_buffer[jump_offset + 0] = 0;
-        decoded_intruction_buffer[jump_offset + 1] = 1;
-        decoded_intruction_buffer[jump_offset + 2] = 1;
+        decoded_intruction_buffer[jump_offset + 0] = '0';
+        decoded_intruction_buffer[jump_offset + 1] = '1';
+        decoded_intruction_buffer[jump_offset + 2] = '1';
     } else if (jump_buffer[1] == 'L' && jump_buffer[2] == 'T') {
-        decoded_intruction_buffer[jump_offset + 0] = 1;
-        decoded_intruction_buffer[jump_offset + 1] = 0;
-        decoded_intruction_buffer[jump_offset + 2] = 0;
+        decoded_intruction_buffer[jump_offset + 0] = '1';
+        decoded_intruction_buffer[jump_offset + 1] = '0';
+        decoded_intruction_buffer[jump_offset + 2] = '0';
     } else if (jump_buffer[1] == 'N' && jump_buffer[2] == 'E') {
-        decoded_intruction_buffer[jump_offset + 0] = 1;
-        decoded_intruction_buffer[jump_offset + 1] = 0;
-        decoded_intruction_buffer[jump_offset + 2] = 1;
+        decoded_intruction_buffer[jump_offset + 0] = '1';
+        decoded_intruction_buffer[jump_offset + 1] = '0';
+        decoded_intruction_buffer[jump_offset + 2] = '1';
     } else if (jump_buffer[1] == 'L' && jump_buffer[2] == 'E') {
-        decoded_intruction_buffer[jump_offset + 0] = 1;
-        decoded_intruction_buffer[jump_offset + 1] = 1;
-        decoded_intruction_buffer[jump_offset + 2] = 0;
+        decoded_intruction_buffer[jump_offset + 0] = '1';
+        decoded_intruction_buffer[jump_offset + 1] = '1';
+        decoded_intruction_buffer[jump_offset + 2] = '0';
     } else if (jump_buffer[1] == 'M' && jump_buffer[2] == 'P') {
-        decoded_intruction_buffer[jump_offset + 0] = 1;
-        decoded_intruction_buffer[jump_offset + 1] = 1;
-        decoded_intruction_buffer[jump_offset + 2] = 1;
+        decoded_intruction_buffer[jump_offset + 0] = '1';
+        decoded_intruction_buffer[jump_offset + 1] = '1';
+        decoded_intruction_buffer[jump_offset + 2] = '1';
     }
 }
 
+void print_array(char* array, int array_size) {
+    for(int i = 0; i < array_size; i++) {
+        printf("%c", array[i]);
+    }
+    printf("\n");
+}
 void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool instruction_type, char* decoded_intruction_buffer) {
     if(instruction_type == false) {
         // instruction type A
@@ -343,9 +350,14 @@ void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool inst
     } else {
         // instruction type B
         //strcpy(decoded_intruction_buffer, "111");
+        printf("\n++++++++++++++++++++++++++++++++\n");
+        printf("beginning of instruction decoding:\n");
+        printf("instruction: %s\n", instruction_buffer);
+        print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
         decoded_intruction_buffer[0] = '1';
         decoded_intruction_buffer[1] = '1';
         decoded_intruction_buffer[2] = '1';
+        print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
         
         // find which fields are contained in the instruction
         bool field_tracker[2] = {false, false};
@@ -355,9 +367,12 @@ void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool inst
 
         size_t max_field_size = 3;
         
-        char* dest_buffer = malloc(sizeof(char) * max_field_size);
-        char* comp_buffer = malloc(sizeof(char) * max_field_size);
-        char* jump_buffer = malloc(sizeof(char) * max_field_size);
+        char* dest_buffer = (char*) malloc(sizeof(char) * (max_field_size+1));
+        char* comp_buffer = (char*) malloc(sizeof(char) * (max_field_size+1));
+        char* jump_buffer = (char*) malloc(sizeof(char) * (max_field_size+1));
+        strcpy(dest_buffer, "000\0");
+        strcpy(comp_buffer, "000\0");
+        strcpy(jump_buffer, "000\0");
 
         size_t dest_index, comp_index, jump_index;
         dest_index = comp_index = jump_index = 0;
@@ -377,18 +392,26 @@ void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool inst
                     continue;
             }
             if(dest_flag == true && comp_flag == true) {
-                dest_buffer[dest_index] = instruction_buffer[i];
-                comp_buffer[comp_index] = instruction_buffer[i];
-                dest_index++;
-                comp_index++;
+                if(dest_index < max_field_size) {
+                    dest_buffer[dest_index] = instruction_buffer[i];
+                    dest_index++;
+                }
+                if(comp_index < max_field_size) {
+                    comp_buffer[comp_index] = instruction_buffer[i];
+                    comp_index++;
+                }
             }
             else if(comp_flag == true) {
-                comp_buffer[comp_index] = instruction_buffer[i];
-                comp_index++;
+                if(comp_index < max_field_size) {
+                    comp_buffer[comp_index] = instruction_buffer[i];
+                    comp_index++;
+                }
                 //printf("\nafter increment comp index: %zu\n", comp_index);
             } else {
-                jump_buffer[jump_index] = instruction_buffer[i];
-                jump_index++;
+                if(jump_index < max_field_size) {
+                    jump_buffer[jump_index] = instruction_buffer[i];
+                    jump_index++;
+                }
             }
         }
         
@@ -406,14 +429,31 @@ void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool inst
         if(field_tracker[0] == true) {
             size_t dest_offset = 10;
             decode_dest_field(dest_buffer, dest_buffer_size, decoded_intruction_buffer, dest_offset);
+            
+            printf("-----------------------------------\n");
+            printf("decoded buffer after dest_filling\n");
+            print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
+            printf("-----------------------------------\n");
         }
         if(field_tracker[1] == true) {
             size_t jump_offset = 13;
-            decode_jump_field(jump_buffer, decoded_intruction_buffer, jump_offset);   
+            decode_jump_field(jump_buffer, decoded_intruction_buffer, jump_offset); 
+            print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);  
+            
+            printf("-----------------------------------\n");
+            printf("decoded buffer after jump_filling\n");
+            print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
+            printf("-----------------------------------\n");
         }
         
         size_t comp_offset = 3;
         decode_comp_field(comp_buffer, comp_buffer_size, decoded_intruction_buffer, comp_offset);
+        
+        printf("-----------------------------------\n");
+        printf("decoded buffer after comp_filling\n");
+        print_array(decoded_intruction_buffer, DECODED_INSTRUCTION_BUFFER_SIZE);
+        printf("-----------------------------------\n");
+        printf("\n++++++++++++++++++++++++++++++++\n");
 
         /*
         if(field_tracker[0] == false) {
