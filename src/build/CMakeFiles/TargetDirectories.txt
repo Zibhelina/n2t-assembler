@@ -1,0 +1,3 @@
+/Users/zibhelina/Documents/vault/knowledge_base/level_2/computer_science/courses/nand2tetris_course/project_06/src/build/CMakeFiles/assembler.dir
+/Users/zibhelina/Documents/vault/knowledge_base/level_2/computer_science/courses/nand2tetris_course/project_06/src/build/CMakeFiles/edit_cache.dir
+/Users/zibhelina/Documents/vault/knowledge_base/level_2/computer_science/courses/nand2tetris_course/project_06/src/build/CMakeFiles/rebuild_cache.dir

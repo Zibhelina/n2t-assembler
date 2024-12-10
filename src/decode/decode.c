@@ -1,14 +1,11 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
 #include <stdbool.h>
-#include <regex.h>
-#include <string.h>
+#include <stddef.h>
+#include <stdlib.h>
 #include <math.h>
+#include <stdint.h>
 
-#include "../linked_list/linked_list.h"
-
-const size_t DECODED_INSTRUCTION_BUFFER_SIZE = 16;
+#include "decode.h"
 
 void decimal_to_binary(char* decimal_buffer, size_t decimal_buffer_size, char* binary_buffer, size_t binary_buffer_size) {
     // char* -> decimal
@@ -458,121 +455,4 @@ void decoding(char* instruction_buffer, size_t intruction_buffer_size, bool inst
         free(comp_buffer);
         free(jump_buffer);
     }
-}
-
-/*
-returns a tuple (bool is_valid, bool instruction_type)
-*/
-void validate(char* buffer, size_t buffer_length, bool* result) {
-    result[0] = false;
-    result[1] = false;
-
-    regex_t regex_A;
-    if(regcomp(&regex_A, "^(@[0-9]+)$", REG_EXTENDED) != 0) {
-        printf("Regular expression A compilation failed\n");
-        regfree(&regex_A);
-        return;
-    }
-
-    regex_t regex_B;
-    if(regcomp(&regex_B, "^(((M|D|MD|A|AM|AD|AMD)=)?(0|1|-1|D|A|M|!D|!A|!M|-D|-A|-M|D\\+1|A\\+1|M\\+1|D-1|A-1|M-1|D\\+A|D\\+M|D-A|D-M|A-D|M-D|D&A|D&M|D\\|A|D\\|M)(;(JGT|JEQ|JGE|JLT|JNE|JLE|JMP))?)$", REG_EXTENDED) != 0) {
-        printf("Regular expression B compilation failed\n");
-        regfree(&regex_A);
-        regfree(&regex_B);
-        return;
-    }
-
-    int check_type_A = regexec(&regex_A, buffer, 0, NULL, 0);
-    int check_type_B = regexec(&regex_B, buffer, 0, NULL, 0);
-    
-    if(check_type_A == 0) {
-        result[0] = true;
-        result[1] = false;
-    }
-    else if(check_type_B == 0) {
-        result[0] = true;
-        result[1] = true;
-    }
-    
-    regfree(&regex_A);
-    regfree(&regex_B);
-}
-
-int main() {
-    FILE *assembly_code = fopen("../../in/assembly_code.as", "r");
-    FILE *machine_code = fopen("../../in/machine_code.as", "w");
-
-    if (assembly_code == NULL) {
-        printf("assembly code file could not be opened.");
-        return 1;
-    }
-
-    if(machine_code == NULL) {
-        printf("machine code file could not be opened.");
-        fclose(assembly_code);
-        return 1;
-    }
-
-    char ch;
-    bool is_end_of_file = false;
-    while ((ch = fgetc(assembly_code)) != EOF) {
-        Linked_List linked_list = create_linked_list();
-
-        while(ch != '\n') {
-            if(ch == ' ') {
-                ch = fgetc(assembly_code);
-                continue;
-            }
-            else if(ch == EOF){
-                is_end_of_file = true;
-                break;
-            }
-
-            linked_list.add_to_end(&linked_list.head, &linked_list.tail, &linked_list.length, ch);
-            ch = fgetc(assembly_code);
-        }
-
-        // linked list -> array
-        size_t instruction_buffer_size = linked_list.length;
-        char* instruction_buffer = malloc(sizeof(char) * instruction_buffer_size);
-        linked_list.fill_buffer(linked_list.head, instruction_buffer);
-        
-        // validate
-        bool* validation_result = malloc(sizeof(bool) * 2);
-        validate(instruction_buffer, instruction_buffer_size, validation_result);
-        bool is_instruction_valid = validation_result[0];
-        bool instruction_type = validation_result[1];
-        
-        if(is_instruction_valid == true) {
-            // decode
-
-            //printf("\ntype of instruction: %s\n", instruction_type == false ? "instruction A" : "instruction B");
-            char* decoded_instruction_buffer = malloc(sizeof(char) * DECODED_INSTRUCTION_BUFFER_SIZE);
-            strcpy(decoded_instruction_buffer, "0000000000000000");
-            decoding(instruction_buffer, instruction_buffer_size, instruction_type, decoded_instruction_buffer);
-            
-            fprintf(machine_code, "%s", decoded_instruction_buffer);
-            fprintf(machine_code, "\n");
-
-            free(decoded_instruction_buffer);
-        }
-
-        free(instruction_buffer);
-        free(validation_result);
-        linked_list.destroy(&linked_list.head, &linked_list.tail, &linked_list.length);
-
-        if(is_instruction_valid == false) {
-            printf("\nSyntax error at instruction: %s", instruction_buffer);
-            break;
-        }
-
-        if(is_end_of_file == true) {
-            break;
-        }
-    }
-
-    fclose(assembly_code);
-    fclose(machine_code);
-    
-    return 0;
 }
